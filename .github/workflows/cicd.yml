@@ -55,4 +55,4 @@ jobs:
         run: terraform plan -var-file=env/${{ steps.output-environment.outputs.ENVIRONMENT }}/main.tfvars -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var-file=env/${{ steps.output-environment.outputs.ENVIRONMENT }}/main.tfvars
