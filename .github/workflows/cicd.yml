@@ -25,9 +25,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set environment variable
-        id: set-environment
-        run: echo "ENVIRONMENT=$(if [ '${{ github.ref_name }}' == 'develop' ]; then echo 'dev'; elif [ '${{ github.ref_name }}' == 'main' ]; then echo 'prod'; fi)" >> $GITHUB_ENV
+      - name: Output environment variable
+        id: output-environment
+        run: echo "::set-output name=ENVIRONMENT::$(if [ '${{ github.ref_name }}' == 'develop' ]; then echo 'dev'; elif [ '${{ github.ref_name }}' == 'main' ]; then echo 'prod'; fi)"
+        shell: bash
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
@@ -42,7 +43,7 @@ jobs:
             aws-region: ap-south-1
 
       - name: Terraform Init
-        run: terraform init -upgrade -backend-config=env/${{ steps.set-environment.outputs.ENVIRONMENT }}/backend.tfvars
+        run: terraform init -upgrade -backend-config=env/${{ steps.output-environment.outputs.ENVIRONMENT }}/backend.tfvars
 
       - name: Terraform Format Check
         run: terraform fmt -write=true
