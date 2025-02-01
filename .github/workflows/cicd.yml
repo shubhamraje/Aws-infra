@@ -6,8 +6,6 @@ on:
       - main
       - develop
 
-env:
-  region: ${{ vars }}
 
 defaults:
   run:
@@ -20,7 +18,8 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name == 'develop' && 'dev' || github.ref_name == 'main' && 'prod' }}
-
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
