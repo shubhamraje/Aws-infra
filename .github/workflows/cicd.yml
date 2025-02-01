@@ -13,6 +13,9 @@ defaults:
   run:
     working-directory: ./terraform
 
+permissions:
+  contents: write
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
