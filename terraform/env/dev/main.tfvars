@@ -1,1 +1,1 @@
-nodejs_app_repo = "nodejs-app"
+nodejs_app = "nodejs-app"
